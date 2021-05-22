@@ -1,11 +1,17 @@
+import { parseArgs } from "./cli.ts";
 import { parseInput } from "./parse_input.ts";
 import { insert } from "./mongo.ts";
 
 async function main(): Promise<void> {
+  const parsed = parseArgs(Deno.args);
+  if (parsed.exit) {
+    Deno.exit(parsed.exitCode);
+  }
+  const { collection } = parsed;
+
   try {
     const json = parseInput(Deno.stdin);
-    console.log(json);
-    await insert(json);
+    await insert(json, collection);
   } catch (error) {
     console.error(error);
     Deno.exit(-1);
