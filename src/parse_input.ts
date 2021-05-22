@@ -2,7 +2,7 @@ type Stdin = typeof Deno.stdin;
 
 export function parseInput(
   input: Stdin,
-): { [key: string]: string | number; data: string } {
+): { [key: string]: string | number; date: string } {
   const buffer = new Uint8Array(128);
   const readSize = input.readSync(buffer);
   if (readSize === null) {

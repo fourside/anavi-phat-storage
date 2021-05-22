@@ -1,9 +1,11 @@
 import { parseInput } from "./parse_input.ts";
+import { insert } from "./mongo.ts";
 
-function main(): void {
+async function main(): Promise<void> {
   try {
     const json = parseInput(Deno.stdin);
     console.log(json);
+    await insert(json);
   } catch (error) {
     console.error(error);
     Deno.exit(-1);
@@ -11,5 +13,5 @@ function main(): void {
 }
 
 if (import.meta.main) {
-  main();
+  await main();
 }
