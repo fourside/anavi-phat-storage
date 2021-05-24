@@ -10,7 +10,7 @@ export async function insert(
   await client.connect(
     `mongodb://${env.MONGO_USER}:${env.MONGO_PASSWORD}@localhost:27017`,
   );
-  const db = client.database("monitors");
+  const db = client.database(env.MONGO_DATABASE);
   const sensors = db.collection(collection);
   await sensors.insertOne(json);
 }
