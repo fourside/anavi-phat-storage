@@ -1,5 +1,5 @@
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
-*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/BH1750/BH1750 > light.`date -u "+%Y%m%d-%H%M%S"`.json
-*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/BMP180/BMP180 > pressure.`date -u "+%Y%m%d-%H%M%S"`.json
-*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/HTU21D/HTU21D > temperature.`date -u "+%Y%m%d-%H%M%S"`.json
+*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/BH1750/BH1750 > json/light.`date -u "+\%Y\%m\%d-\%H\%M\%S"`.json
+*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/BMP180/BMP180 > json/pressure.`date -u "+\%Y\%m\%d-\%H\%M\%S"`.json
+*/5 * * * * cd /home/pi/anavi-phat-storage && ./sensors/HTU21D/HTU21D > json/temperature.`date -u "+\%Y\%m\%d-\%H\%M\%S"`.json
