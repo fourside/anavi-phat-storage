@@ -1,3 +1,2 @@
-mongo
 .env
-__pycache__
+json/*.json
