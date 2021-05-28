@@ -16,11 +16,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	filePattern := regexp.MustCompile("^(.+?)\\..+")
+	filePattern := regexp.MustCompile("^(.+?)\\.(.+?)\\..+")
 	for _, file := range files {
-		fmt.Println(file)
-		match := filePattern.FindStringSubmatch(file)
-		fmt.Println(match[1])
+		basename := filepath.Base(file)
+		match := filePattern.FindStringSubmatch(basename)
+
+		jst, _ := time.LoadLocation("Asia/Tokyo")
+		sensorTime, err := time.ParseInLocation("20060102-150405", match[2], jst)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		bytes, err := os.ReadFile(file)
 		if err != nil {
@@ -29,7 +34,9 @@ func main() {
 
 		var result map[string]interface{}
 		json.Unmarshal(bytes, &result)
-		result["date"] = time.Now().Format(time.RFC3339)
+		result["date"] = sensorTime.Format(time.RFC3339)
+
+		fmt.Println(match[1])
 		fmt.Println(result)
 	}
 }
