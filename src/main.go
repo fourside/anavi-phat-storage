@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -21,8 +20,10 @@ func main() {
 		basename := filepath.Base(file)
 		match := filePattern.FindStringSubmatch(basename)
 
+		var collectionName = match[1]
+		var dateString = match[2]
 		jst, _ := time.LoadLocation("Asia/Tokyo")
-		sensorTime, err := time.ParseInLocation("20060102-150405", match[2], jst)
+		sensorTime, err := time.ParseInLocation("20060102-150405", dateString, jst)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -32,11 +33,10 @@ func main() {
 			log.Fatal(err)
 		}
 
-		var result map[string]interface{}
-		json.Unmarshal(bytes, &result)
-		result["date"] = sensorTime.Format(time.RFC3339)
+		var jsonObject map[string]interface{}
+		json.Unmarshal(bytes, &jsonObject)
+		jsonObject["date"] = sensorTime.Format(time.RFC3339)
 
-		fmt.Println(match[1])
-		fmt.Println(result)
+		addToFirestore(collectionName, jsonObject)
 	}
 }
