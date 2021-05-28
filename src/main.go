@@ -38,5 +38,10 @@ func main() {
 		jsonObject["date"] = sensorTime.Format(time.RFC3339)
 
 		addToFirestore(collectionName, jsonObject)
+
+		err = os.Remove(file)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
