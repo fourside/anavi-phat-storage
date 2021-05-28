@@ -13,4 +13,7 @@ test:
 lint:
 	go vet ./src/*.go
 
-.PHONY: clean test lint
+run:
+	go run src/*.go
+
+.PHONY: clean test lint run
