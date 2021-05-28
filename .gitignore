@@ -1,3 +1,4 @@
 .env
 json/*.json
 serviceAccountKey.json
+anavi-phat-storage
