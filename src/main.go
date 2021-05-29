@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"time"
 )
 
 func main() {
@@ -22,8 +21,8 @@ func main() {
 
 		var collectionName = match[1]
 		var dateString = match[2]
-		jst, _ := time.LoadLocation("Asia/Tokyo")
-		sensorTime, err := time.ParseInLocation("20060102-150405", dateString, jst)
+
+		jstTimeString, err := parseTime(dateString)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -35,7 +34,7 @@ func main() {
 
 		var jsonObject map[string]interface{}
 		json.Unmarshal(bytes, &jsonObject)
-		jsonObject["date"] = sensorTime.Format(time.RFC3339)
+		jsonObject["date"] = jstTimeString
 
 		addToFirestore(collectionName, jsonObject)
 
